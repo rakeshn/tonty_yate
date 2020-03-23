@@ -1,7 +1,14 @@
 import uuid
 
-from src.models.deck import RANKS
+from models.deck import RANKS
+from models import deck
 
+
+class Player:
+    def __init__(self, name: str):
+        self.name = name
+        self.id = str(uuid.uuid4().hex)
+        self.cards = []
 
 class Game:
     def __init__(self):
@@ -10,6 +17,31 @@ class Game:
         self.deck = []
         self.trump = None
         self.trump_called = False
+        self.started = False
+
+    def not_allowed_if_game_started(self, action: str):
+        if self.started:
+            raise Exception(f'{action} is not allowed as the game has started.')
+
+    def register_player(self, name: str):
+        self.not_allowed_if_game_started('Add player')
+        player = Player(name)
+        self.players.append(player)
+        return player.id
+
+    def start_game(self):
+        self.deck = deck.Deck(len(self.players))
+        self.deck.shuffle()
+        self.started = True
+        self.deal()
+
+    def deal(self):
+        num_players = len(self.players)
+        if len(self.deck) % num_players != 0:
+            raise Exception('Not enough cards to deal')
+        for player in self.players:
+            player.cards = self.deck[:4]
+            self.deck = self.deck[:4]
 
     def assign_trump(self, card):
         self.trump = card
