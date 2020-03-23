@@ -1,14 +1,23 @@
 import uuid
+import copy
 
+from enum import Enum
 from models.deck import RANKS
 from models import deck
 
 
+class Teams(Enum):
+    Team1 = 1
+    Team2 = 2
+
+
 class Player:
-    def __init__(self, name: str):
+    def __init__(self, name: str, team: Teams):
         self.name = name
         self.id = str(uuid.uuid4().hex)
         self.cards = []
+        self.team = team
+
 
 class Game:
     def __init__(self):
@@ -18,6 +27,7 @@ class Game:
         self.trump = None
         self.trump_called = False
         self.started = False
+        self.round = None
 
     def not_allowed_if_game_started(self, action: str):
         if self.started:
@@ -25,7 +35,7 @@ class Game:
 
     def register_player(self, name: str):
         self.not_allowed_if_game_started('Add player')
-        player = Player(name)
+        player = Player(name, Teams((len(self.players) % 2) + 1))
         self.players.append(player)
         return player.id
 
@@ -33,15 +43,8 @@ class Game:
         self.deck = deck.Deck(len(self.players))
         self.deck.shuffle()
         self.started = True
-        self.deal()
-
-    def deal(self):
-        num_players = len(self.players)
-        if len(self.deck) % num_players != 0:
-            raise Exception('Not enough cards to deal')
-        for player in self.players:
-            player.cards = self.deck[:4]
-            self.deck = self.deck[:4]
+        self.round = Round(self)
+        self.round.deal()
 
     def assign_trump(self, card):
         self.trump = card
@@ -49,12 +52,23 @@ class Game:
     def call_trump(self):
         self.trump_called = True
 
+
 class Round:
     def __init__(self, game):
-        self.cards = []
+        self.cards = copy.copy(game.deck.cards)
         self.index_of_trump = 0
-        self.players = []
+        self.players = game.players
+        for player in self.players:
+            player.cards.clear()
         self.game = game
+
+    def deal(self):
+        num_players = len(self.players)
+        if len(self.cards) % num_players != 0:
+            raise Exception('Not enough cards to deal')
+        for player in self.players:
+            player.cards.append(self.cards[:4])
+            self.cards = self.cards[4:]
 
     def highest_card_index(self):
         highest_index = 99

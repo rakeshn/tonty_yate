@@ -19,14 +19,14 @@ def games():
     return json.dumps(ids)
 
 
-@app.route('/game', methods=['POST'])
+@app.route('/game', methods=['PUT'])
 def create_game():
     newgame = game.Game()
     active_games.append(newgame)
     return newgame.id
 
 
-@app.route('/game/<id>/player', methods=['POST'])
+@app.route('/game/<id>/player', methods=['PUT'])
 def register_player(id):
     if 'name' in request.args:
         name = request.args['name']
@@ -38,7 +38,33 @@ def register_player(id):
 @app.route('/game/<id>/players', methods=['GET'])
 def players(id):
     game = get_game_by_id(id)
-    return jsonify([player.name for player in game.players])
+    return jsonify([{player.name: player.team.name} for player in game.players])
+
+
+@app.route('/game/<id>/start', methods=['POST'])
+def start(id):
+    game = get_game_by_id(id)
+    game.start_game()
+    return f"Started game {id}"
+
+
+@app.route('/game/<id>/deal', methods=['POST'])
+def deal(id):
+    game = get_game_by_id(id)
+    game.round.deal()
+    return f"Done!"
+
+
+@app.route('/game/<id>/player/<playerid>/hand', methods=['GET'])
+def get_hand(id:str, playerid:str):
+    game = get_game_by_id(id)
+    if not game.started:
+        raise Exception("Game has not started")
+    player = [player for player in game.round.players if player.id == playerid]
+    if not player:
+        raise Exception("Player not found")
+
+    return jsonify([str(card) for card in player[0].cards])
 
 
 def get_game_by_id(_id) -> game.Game:
@@ -50,8 +76,6 @@ def get_game_by_id(_id) -> game.Game:
         raise Exception('game not found')
 
     return game[0]
-
-
 
 
 @app.route('/game', methods=['DELETE'])
