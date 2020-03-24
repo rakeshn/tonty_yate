@@ -1,0 +1,48 @@
+.card {
+    width: 83px;
+    height: 117px;
+    background: url('http://i.stack.imgur.com/WZ9Od.gif') no-repeat;
+    background-size: 1300% 500%;
+}
+.card-wide {
+    width: 100px;
+}
+.card-high {
+    height: 130px;
+}
+
+.SJ { background-position: 75% 75%; }
+.S9 { background-position: 58.333% 75%; }
+.SA { background-position: 100% 75%; }
+.S10 { background-position: 66.666% 75%; }
+.SQ { background-position: 83.333% 75%; }
+.SK { background-position: 91.666% 75%; }
+.S8 { background-position: 50% 75%; }
+.S7 { background-position: 41.666% 75%; }
+
+.HJ { background-position: 75% 0%; }
+.H9 { background-position: 58.333% 0%; }
+.HA { background-position: 100% 0%; }
+.H10 { background-position: 66.666% 0%; }
+.HQ { background-position: 83.333% 0%; }
+.HK { background-position: 91.666% 0%; }
+.H8 { background-position: 50% 0%; }
+.H7 { background-position: 41.666% 0%; }
+
+.CJ { background-position: 75% 50%; }
+.C9 { background-position: 58.333% 50%; }
+.CA { background-position: 100% 50%; }
+.C10 { background-position: 66.666% 50%; }
+.CQ { background-position: 83.333% 50%; }
+.CK { background-position: 91.666% 50%; }
+.C8 { background-position: 50% 50%; }
+.C7 { background-position: 41.666% 50%; }
+
+.DJ { background-position: 75% 25%; }
+.D9 { background-position: 58.333% 25%; }
+.DA { background-position: 100% 25%; }
+.D10 { background-position: 66.666% 25%; }
+.DQ { background-position: 83.333% 25%; }
+.DK { background-position: 91.666% 25%; }
+.D8 { background-position: 50% 25%; }
+.D7 { background-position: 41.666% 25%; }

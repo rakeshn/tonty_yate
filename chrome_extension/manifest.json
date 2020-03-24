@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Twenty eight - The ultimate card game",
+  "description": "This is the extension for connecting to and playing the card game 28",
+  "version": "1.0",
+  "icons": {
+        "16": "icon.png",
+        "32": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+  "browser_action": {
+  },
+  "background": {
+        "scripts": [
+            "src/background.js"
+        ]
+  },
+  "permissions": [
+   "activeTab"
+   ]
+}

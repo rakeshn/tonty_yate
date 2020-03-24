@@ -9,8 +9,12 @@ active_games = []
 
 @app.route('/')
 def hello_world():
-    """Print 'Hello, world!' as the response body."""
-    return 'Hello, world!'
+    return '28 - The Jack of all card games'
+
+
+@app.route('/status')
+def status():
+    return 'OK'
 
 
 @app.route('/games', methods=['GET'])
