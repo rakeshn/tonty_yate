@@ -73,3 +73,14 @@ curl -XDELETE 'http://localhost:5000/game/<id>'
     ```
     
 - Use the curl commands above
+
+## Chrome extension
+The UI for the game is written as a chrome extension
+
+### Installing extension
+* Open chrome
+* Goto `chrome://extensions/`
+* Enable `developer mode` on top left
+* Click on `Load unpacked`
+* Select chrome_extension folder
+* Enable the plugin
