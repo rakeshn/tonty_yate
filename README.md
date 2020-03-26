@@ -25,10 +25,10 @@ Functions include:
 # list all games
 curl 'http://localhost:5000/games'
 
-# Create a new game
+# Create a new game. Returns the gameid.
 curl -XPUT 'http://localhost:5000/game'
 
-# Register a new player
+# Register a new player. Returns the playerid.
 curl -XPUT 'http://localhost:5000/game/<id>/player?name=player1'
 
 # List all players and team they belong to
